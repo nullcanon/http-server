@@ -18,12 +18,13 @@ static int GetQueryString(char buf[])
     // 判断是get还是post
     // get -read QUERY_STRING
     // post -read CONTENT_LENGTH
-    //    printf("befor strcasecmp method and GET\n");// DEBUG
+        printf("REQUEST_METHOD=%s,befor strcasecmp method and GET\n",method);// DEBUG
     if(strcasecmp(method,"GET") == 0){
         char* query_string = getenv("QUERY_STRING");
+        printf("QUERY_STRING=%s",query_string);
     //       printf("buf size %ld",strlen(buf));// DEBUG
         if(query_string == NULL){
-            fprintf(stderr,"quer_string is null\n");
+            fprintf(stderr,"query_string is null\n");
             return -1;
         }
         strcpy(buf,query_string);

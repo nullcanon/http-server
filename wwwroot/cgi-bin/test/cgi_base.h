@@ -8,6 +8,8 @@
 
 static int GetQueryString(char buf[])
 {   
+    printf("begin");
+    printf("<cr>");
     // 1.从环境变量获取方法
     char* method = getenv("REQUEST_METHOD");
     if(method == NULL){
@@ -35,6 +37,7 @@ static int GetQueryString(char buf[])
             return -1;
         }
         int content_length = atoi(content_length_str);
+        printf("content_length:%d\n",content_length);
 
         // DEBUG
         // printf("content_length=%d",content_length);

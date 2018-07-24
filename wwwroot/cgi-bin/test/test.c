@@ -1,5 +1,6 @@
 #include"cgi_base.h"
 
+
 int main()
 {
     char buf[1024*4] = {0};
@@ -21,3 +22,18 @@ int main()
     printf("<h1>sum=%d</h1>",sum);
     return 0;
 }
+
+/*
+int main()
+{
+    char buf[1024*4] = {0};
+    int ret = GetQueryString(buf);
+    printf("%d",ret);
+    if(ret < 0)
+        printf("<h1>Get char err</h1>\n");
+    else
+        printf("<h1>GET:%s\n</h1>",buf);
+
+    return 0;
+}
+*/

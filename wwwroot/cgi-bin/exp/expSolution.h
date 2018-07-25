@@ -1,11 +1,15 @@
 #pragma once
 
 #include<string>
-#include<math.h>
+#include<cmath>
 #include<iostream>
 #include<cctype>
 #include<queue>
 #include<stack>
+#include<string>
+#include<cstring>
+#include<cstdlib>
+#include<cstdio>
 #include"BinaryTree.h"
 using namespace std;
 

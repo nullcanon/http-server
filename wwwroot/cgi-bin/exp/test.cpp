@@ -68,8 +68,10 @@ int main()
 	//TestCreateBinTreeExp();
 	//Testcalculatet();
 	//printf("%d", 10E-9);
-	string str("2x ^ 4 - 3x + sin(x*x) - 2");
+	//string str("2x ^ 4 - 3x + sin(x*x) - 2");
 
+	//string str("2x^4-3x+sin(x*x)-2");
+    string str("sinx");
 	string s = ExpResult(str);
 	cout << s << endl;
 	return 0;

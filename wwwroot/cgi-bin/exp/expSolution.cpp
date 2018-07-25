@@ -9,9 +9,9 @@ void RepFun(string& str)
 	if (str == "")
 		throw "表达式为空";
 
-	char* strs[] = { "cos", "sin", "tan", "cot","ln","log"};
-	char* chs[] = { "A", "B", "C", "D", "E", "F" };
-	int i = 0;
+	const char* strs[] = { "cos", "sin", "tan", "cot","ln","log"};
+	const char* chs[] = { "A", "B", "C", "D", "E", "F" };
+	size_t i = 0;
 	while (i<sizeof(strs)/sizeof(strs[0])) 
 	{
 		if (str.find(strs[i]) == string::npos)
@@ -51,7 +51,7 @@ void DelSapce(string& str)
 		  
 void Preprocessor(string& str)
 {
-	int cur = 0;
+	size_t cur = 0;
 	if (str == "")
 		throw "表达式为空";
 	RepFun(str);
@@ -143,13 +143,14 @@ static int OP_PRECED(char c)
 //解析是否为合格的数字字符串
 static bool ParseFloat(const string str)
 {
+    (void)str;
 	return true;
 }
 
 void InfixToPostfix(const string exp,queue<string>& postFix)
 {
 	stack<string> stack;
-	for (int i = 0; i < exp.length(); ++i)
+	for (size_t i = 0; i < exp.length(); ++i)
 	{
 		//数字
 		if (IS_NUM_CH(exp[i]))
@@ -158,7 +159,7 @@ void InfixToPostfix(const string exp,queue<string>& postFix)
 			// 将一个数字提取出来构建成字符串
 			// 向后读取，当前读取的是.或者读取的是数字，一直向下读取
 			string tmp;
-			int j = i;
+			size_t j = i;
 			for (; j < exp.length() && (exp[j] == '.' || IS_NUM_CH(exp[j])); ++j)
 				tmp.insert(tmp.end(), 1, exp[j]);
 			
@@ -511,6 +512,10 @@ static BinaryTreeNode<string>* XsubY(BinaryTreeNode<string>* X, BinaryTreeNode<s
 BinaryTreeNode<string>* calculate(string& exp)
 {
 	Preprocessor(exp);
+    size_t i=0;
+    for(;i<exp.length();++i)
+        if(IS_INVALID_CH(exp[i]))
+            throw "表达式不合法";
 	queue<string> postFix;
 	InfixToPostfix(exp, postFix);
 	BinaryTreeNode<string>* t = CreateBinTreeExp(postFix);//构建表达式树
@@ -518,12 +523,12 @@ BinaryTreeNode<string>* calculate(string& exp)
 	
 	BinaryTreeNode<string>* x0 = new BinaryTreeNode<string>("1");
 	BinaryTreeNode<string>* x1 = new BinaryTreeNode<string>("2");
-	int i = 0;
+	int j = 0;
 	while (abs(atof(XsubY(x0,x1)->_data.c_str())) > 0.00000009)
 	{
 		x0->_data = x1->_data;
 		x1->_data = XsubY(x0 , XdivY(compute(t, x0) , compute(dt,x0)))->_data;
-		if (++i > 1000)
+		if (++j > 1000)
 			break;
 	}
 	return x1;
@@ -533,12 +538,17 @@ string ExpResult(string& exp)
 {
 	string ret;
 	try{
+        cout<<"in try front"<<endl;
 		ret = calculate(exp)->_data;
+        cout<<"in try last"<<endl;
+    cout<<ret<<endl;    
+        return ret;
 	}
 	catch (const char* str)
 	{
-		cout << str << endl;
+        ret = string(str);
 	}
+    cout<<ret<<endl;    
 	return ret;
 }
 
